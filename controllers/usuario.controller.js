@@ -1,6 +1,10 @@
 import { registrarServicio, buscarPorEmailService } from '../services/usuario.service.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 
 export const registrarController = async (req, res) => {
     try {
