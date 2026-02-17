@@ -34,9 +34,7 @@ export const loginController = async (req, res) => {
         const token = jwt.sign(
             { id: usuario._id, email: usuario.email },
             process.env.JWT_TOKEN,
-            
-            
-            // { expiresIn: '' }
+            { expiresIn: '1m' }
         );
 
         res.status(200).send({ mensaje: "Login exitoso", token });
