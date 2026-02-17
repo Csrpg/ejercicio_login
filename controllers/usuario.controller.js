@@ -1,9 +1,13 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 import { registrarServicio, buscarPorEmailService } from '../services/usuario.service.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
-dotenv.config();
+
+
 
 
 export const registrarController = async (req, res) => {
@@ -26,10 +30,10 @@ export const loginController = async (req, res) => {
         const esValida = await bcrypt.compare(password, usuario.password);
         if (!esValida) return res.status(401).send({ mensaje: "Contraseña incorrecta" });
 
-        // Generar Token (usar JWT_SECRET del .env)
+        // Generar Token (usar JWT_TOKEN del .env)
         const token = jwt.sign(
             { id: usuario._id, email: usuario.email },
-            process.env.JWT_SECRET,
+            process.env.JWT_TOKEN,
             
             
             // { expiresIn: '' }
@@ -37,6 +41,7 @@ export const loginController = async (req, res) => {
 
         res.status(200).send({ mensaje: "Login exitoso", token });
     } catch (error) {
+        console.log("SURGIÓ UN ERROR:", error.message); // Esto se verá en tu terminal de VS Code
         res.status(500).send({ mensaje: "Error interno del servidor" });
     }
 };
